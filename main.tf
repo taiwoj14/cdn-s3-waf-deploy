@@ -47,11 +47,6 @@ resource "aws_s3_bucket_website_configuration" "website_bucket_config" {
 }
 
 
-#resource "time_sleep" "wait_30_seconds" {
-#  depends_on = [aws_s3_bucket.website_bucket]
-#  create_duration = "30s"
-#}
-
 resource "aws_s3_bucket_policy" "website_policy" {
   bucket = aws_s3_bucket.website_bucket.id
 
@@ -70,7 +65,6 @@ resource "aws_s3_bucket_policy" "website_policy" {
       }
     ]
   })
-#    depends_on = [time_sleep.wait_30_seconds]
 }
 
 resource "aws_acm_certificate" "cert" {
@@ -161,7 +155,7 @@ resource "aws_cloudfront_distribution" "website_distribution" {
 
   price_class = "PriceClass_100"
 
-  web_acl_id = aws_wafv2_web_acl.waf.arn
+  web_acl_id = var.enable_waf ? aws_wafv2_web_acl.waf.arn : null
   depends_on = [aws_wafv2_web_acl.waf]
 }
 
