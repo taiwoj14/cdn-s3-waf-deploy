@@ -5,7 +5,7 @@ provider "aws" {
 variable "domain_name" {
   description = "The domain name to use for the website"
   type        = string
-  default     = "taijoh.com"
+  default     = "tai-joh.com"
 }
 
 variable "subdomain_name" {
